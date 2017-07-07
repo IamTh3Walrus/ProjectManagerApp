@@ -1,20 +1,34 @@
 import React, { Component } from 'react';
+import ProjectItem from './ProjectItem';
 
 class Projects extends Component {
+  deleteProject(id){
+    this.props.onDelete(id);
+  }
+
   render() {
     let projectItems;
     if(this.props.projects){
-      // Map through the projectItems array
+      // Map through item array.
       projectItems = this.props.projects.map(project => {
-
+        return (
+          <ProjectItem onDelete={this.deleteProject.bind(this)} key={project.title} project={project} />
+        );
       });
     }
     return (
       <div className="Projects">
-        My Projects
+        <h3>Latest Projects</h3>
+        {projectItems}
       </div>
     );
   }
+}
+
+// PropTypes exports a range of validators that can be used to make sure the data you receive is valid. 
+Projects.propTypes = {
+  projects: React.PropTypes.array,
+  onDelete: React.PropTypes.func
 }
 
 export default Projects;
